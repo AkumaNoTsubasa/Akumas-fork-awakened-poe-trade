@@ -56,6 +56,7 @@
 import { defineComponent, PropType, watch, ref, nextTick, computed, ComponentPublicInstance } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { ItemRarity, ItemCategory, ParsedItem } from '@/parser'
+import { VISCERA } from '@/parser/meta'
 import TradeListing from './trade/TradeListing.vue'
 import TradeBulk from './trade/TradeBulk.vue'
 import TradeLinks from './trade/TradeLinks.vue'
@@ -142,6 +143,7 @@ export default defineComponent({
           (item.category === ItemCategory.SanctumRelic) ||
           (item.category === ItemCategory.Charm) ||
           (item.category === ItemCategory.Idol) ||
+          (VISCERA.has(item.category!)) ||
           (!CATEGORY_TO_TRADE_ID.has(item.category!) &&
             item.info.refName !== 'Mercenary Warrant') ||
           (item.isUnidentified) ||

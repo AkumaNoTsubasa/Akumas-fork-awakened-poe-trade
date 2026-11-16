@@ -1,6 +1,6 @@
 import type { ItemFilters } from './interfaces'
 import { ParsedItem, ItemCategory, ItemRarity } from '@/parser'
-import { MAGIC_ONLY_OR_UNIQUE_ITEM, CONSUMABLE_CRAFTABLE_ITEM, JEWELLERY } from '@/parser/meta'
+import { MAGIC_ONLY_OR_UNIQUE_ITEM, CONSUMABLE_CRAFTABLE_ITEM, JEWELLERY, VISCERA } from '@/parser/meta'
 import { getPropQuality } from '@/parser/calc-q20'
 import { tradeTag } from '../trade/common'
 import { ModifierType } from '@/parser/modifiers'
@@ -84,6 +84,21 @@ export function createFilters (
     filters.itemLevel = {
       value: item.itemLevel!,
       disabled: false
+    }
+    return filters
+  }
+  if (VISCERA.has(item.category!)) {
+    filters.searchExact = {
+      baseType: item.info.name,
+      baseTypeTrade: t(opts, item.info)
+    }
+    filters.searchRelaxed = {
+      category: item.category,
+      disabled: true
+    }
+    filters.itemLevel = {
+      value: item.itemLevel!,
+      disabled: true
     }
     return filters
   }

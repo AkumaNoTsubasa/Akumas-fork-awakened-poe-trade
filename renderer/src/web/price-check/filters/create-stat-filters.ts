@@ -1,6 +1,6 @@
 import { ParsedItem, ItemRarity, ItemCategory } from '@/parser'
 import { ModifierType, StatCalculated, statSourcesTotal, translateStatWithRoll } from '@/parser/modifiers'
-import { JEWELLERY } from '@/parser/meta'
+import { JEWELLERY, VISCERA } from '@/parser/meta'
 import { getPropQuality, QUALITY_CHANGING_ENCHANT } from '@/parser/calc-q20'
 import { percentRoll, percentRollDelta, roundRoll } from './util'
 import { FilterTag, ItemHasEmptyModifier, StatFilter, FilterGroup, FilterOrGroup } from './interfaces'
@@ -130,6 +130,8 @@ export function createExactStatFilters (
     enableAllFilters(ctx.filters)
   } else if (item.category === ItemCategory.Idol) {
     enableGoodRolledFilters(ctx.filters, 0.66)
+  } else if (VISCERA.has(item.category!)) {
+    applyVisceraRules(ctx.filters)
   }
 
   return ctx.filters
@@ -541,6 +543,16 @@ function applyClusterJewelRules (filters: StatFilter[], exact: boolean) {
         filter.roll!.max = undefined
       }
       // else 2, 5(Rare), 8, 9 are [_ , n]
+    }
+  }
+}
+
+function applyVisceraRules (filters: StatFilter[]) {
+  // Lesser and regular tiers share stats
+  for (const filter of filters) {
+    if (filter.roll?.bounds) {
+      filter.roll.min ??= filter.roll.bounds.min
+      filter.roll.max ??= filter.roll.bounds.max
     }
   }
 }

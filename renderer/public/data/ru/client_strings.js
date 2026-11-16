@@ -131,6 +131,12 @@ export default {
   CHART_SULPHUR: 'Мертвецкая сера: ',
   MERCENARY_LEVEL: 'Уровень наёмника: ',
   MERCENARY_BUILD: 'Билд: ',
+  VISCERA_HELP: 'Отнесите этот предмет к плетёному человеку в лагере или убежище, чтобы его прикрепить.',
+  VISCERA_NAME: /^(?:Мелкая|Крупная) часть тела: (.*)$/,
+  VISCERA_HEAD: 'Голова',
+  VISCERA_UPPER_LIMB: 'Верхняя конечность',
+  VISCERA_TORSO: 'Туловище',
+  VISCERA_LOWER_LIMB: 'Нижняя конечность',
   // ---
   CHAT_SYSTEM: /^: (?<body>.+)$/,
   CHAT_TRADE: /^\$(?:<(?<guild_tag>.+?)> )?(?<char_name>.+?): (?<body>.+)$/,

@@ -52,7 +52,12 @@ export const CATEGORY_TO_TRADE_ID = new Map([
   [ItemCategory.Charm, 'azmeri.charm'],
   [ItemCategory.Idol, 'idol'],
   [ItemCategory.Graft, 'graft'],
-  [ItemCategory.Chart, 'chart']
+  [ItemCategory.Chart, 'chart'],
+  [ItemCategory.Viscera, 'viscera'],
+  [ItemCategory.VisceraHead, 'viscera.head'],
+  [ItemCategory.VisceraArm, 'viscera.arm'],
+  [ItemCategory.VisceraBody, 'viscera.body'],
+  [ItemCategory.VisceraLeg, 'viscera.leg']
 ])
 
 const TOTAL_MODS_TEXT = {

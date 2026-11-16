@@ -3,6 +3,7 @@ import { createExactStatFilters, initUiModFilters } from './create-stat-filters'
 import { createMercenaryFilters } from './pseudo/mercenary'
 import { ModifierType, sumStatsByModType } from '@/parser/modifiers'
 import { ItemCategory, ItemRarity, ParsedItem } from '@/parser'
+import { VISCERA } from '@/parser/meta'
 import type { FilterPreset } from './interfaces'
 
 const ROMAN_NUMERALS = ['I', 'II', 'III', 'IV', 'V']
@@ -44,6 +45,7 @@ export function createPresets (
     (item.category === ItemCategory.SanctumRelic && item.rarity !== ItemRarity.Unique) ||
     (item.category === ItemCategory.Idol && item.rarity !== ItemRarity.Unique) ||
     item.category === ItemCategory.Charm ||
+    VISCERA.has(item.category!) ||
     item.category === ItemCategory.Map ||
     item.category === ItemCategory.MemoryLine ||
     item.category === ItemCategory.Invitation ||

@@ -131,6 +131,12 @@ export default {
   CHART_SULPHUR: '망자의 유황: ',
   MERCENARY_LEVEL: '용병 레벨: ',
   MERCENARY_BUILD: '빌드: ',
+  VISCERA_HELP: '마을이나 은신처에 있는 버들가지 제웅으로 가져가서 부착하십시오.',
+  VISCERA_NAME: /^(?:하위|상위) (.*)$/,
+  VISCERA_HEAD: '머리',
+  VISCERA_UPPER_LIMB: '상지',
+  VISCERA_TORSO: '몸통',
+  VISCERA_LOWER_LIMB: '하지',
   // ---
   CHAT_SYSTEM: /^: (?<body>.+)$/,
   CHAT_TRADE: /^\$(?:<(?<guild_tag>.+?)> )?(?<char_name>.+?): (?<body>.+)$/,

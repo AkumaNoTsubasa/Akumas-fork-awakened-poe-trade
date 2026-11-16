@@ -51,7 +51,12 @@ export enum ItemCategory {
   Idol = 'Idol',
   Graft = 'Graft',
   Chart = 'Chart',
-  MercenaryWarrant = 'Mercenary Warrant'
+  MercenaryWarrant = 'Mercenary Warrant',
+  Viscera = 'Viscera',
+  VisceraHead = 'Head Viscera',
+  VisceraArm = 'Arm Viscera',
+  VisceraBody = 'Body Viscera',
+  VisceraLeg = 'Leg Viscera'
 }
 
 export const WEAPON_ONE_HANDED_MELEE = new Set([
@@ -103,6 +108,14 @@ export const HEIST_EQUIPMENT = new Set([
   ItemCategory.HeistBrooch,
   ItemCategory.HeistGear,
   ItemCategory.HeistCloak
+])
+
+export const VISCERA = new Set([
+  ItemCategory.Viscera,
+  ItemCategory.VisceraHead,
+  ItemCategory.VisceraArm,
+  ItemCategory.VisceraBody,
+  ItemCategory.VisceraLeg
 ])
 
 export const MAGIC_ONLY_OR_UNIQUE_ITEM = new Set([

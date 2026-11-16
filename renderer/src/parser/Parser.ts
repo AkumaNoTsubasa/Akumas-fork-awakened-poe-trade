@@ -9,7 +9,7 @@ import {
 } from '@/assets/data'
 import { ModifierType, ModifierMechanic, sumStatsByModType } from './modifiers'
 import { linesToStatStrings, tryParseTranslation, getRollOrMinmaxAvg, ParsedStat } from './stat-translations'
-import { ItemCategory, JEWELLERY } from './meta'
+import { ItemCategory, JEWELLERY, VISCERA } from './meta'
 import { IncursionRoom, ParsedItem, ItemInfluence, ItemRarity } from './ParsedItem'
 import { magicBasetype } from './magic-name'
 import { isModInfoLine, groupLinesByMod, parseModInfoLine, parseModType, ModifierInfo, ParsedModifier, ENCHANT_LINE, SCOURGE_LINE, IMPLICIT_LINE } from './advanced-mod-desc'
@@ -67,6 +67,7 @@ const parsers: Array<ParserFn | { virtual: VirtualParserFn }> = [
   parseSplit,
   parseSentinelCharge,
   parseScryingOrb,
+  parseViscera,
   parseMercenary,
   parseLogbookArea,
   parseLogbookArea,
@@ -173,6 +174,12 @@ function normalizeName (item: ParserState) {
       item.name = 'Metamorph Heart'
     } else if (_$.METAMORPH_LIVER.test(item.name)) {
       item.name = 'Metamorph Liver'
+    }
+  }
+
+  if (item.category === ItemCategory.Viscera) {
+    if (_$.VISCERA_NAME.test(item.name)) {
+      item.name = _$.VISCERA_NAME.exec(item.name)![1]
     }
   }
 }
@@ -798,7 +805,8 @@ function parseModifiers (section: string[], item: ParsedItem) {
     item.rarity !== ItemRarity.Normal &&
     item.rarity !== ItemRarity.Magic &&
     item.rarity !== ItemRarity.Rare &&
-    item.rarity !== ItemRarity.Unique
+    item.rarity !== ItemRarity.Unique &&
+    !VISCERA.has(item.category!)
   ) {
     return 'PARSER_SKIPPED'
   }
@@ -910,6 +918,28 @@ function parseScryingOrb (section: string[], item: ParsedItem) {
   return 'SECTION_SKIPPED'
 }
 
+function parseViscera (section: string[], item: ParsedItem) {
+  if (item.category !== ItemCategory.Viscera) return 'PARSER_SKIPPED'
+
+  if (section.length === 1) {
+    switch (section[0]) {
+      case _$.VISCERA_HEAD:
+        item.category = ItemCategory.VisceraHead
+        return 'SECTION_PARSED'
+      case _$.VISCERA_UPPER_LIMB:
+        item.category = ItemCategory.VisceraArm
+        return 'SECTION_PARSED'
+      case _$.VISCERA_TORSO:
+        item.category = ItemCategory.VisceraBody
+        return 'SECTION_PARSED'
+      case _$.VISCERA_LOWER_LIMB:
+        item.category = ItemCategory.VisceraLeg
+        return 'SECTION_PARSED'
+    }
+  }
+  return 'SECTION_SKIPPED'
+}
+
 function parseEldritchItem (section: string[]): void {
   // these don't have a dedicated section and are appended to last-ish one,
   // it can be Explicit Mods section, Corrupted, or Mirrored line.
@@ -979,6 +1009,9 @@ function parseCategoryByHelpText (section: string[], item: ParsedItem) {
     return 'SECTION_PARSED'
   } else if (section[0] === _$.VOIDSTONE_HELP) {
     item.category = ItemCategory.Voidstone
+    return 'SECTION_PARSED'
+  } else if (section[0] === _$.VISCERA_HELP) {
+    item.category = ItemCategory.Viscera
     return 'SECTION_PARSED'
   }
 
